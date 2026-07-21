@@ -44,6 +44,12 @@ public class SecurityConfig {
                                 "/api/products/*"
                         ).permitAll()
 
+                        .requestMatchers(HttpMethod.POST, "/api/orders")
+                        .authenticated()
+
+                            .requestMatchers(HttpMethod.GET,
+                                "/api/orders/my")
+                        .authenticated()
                         // Only ADMIN can add products
                         .requestMatchers(HttpMethod.POST,
                                 "/api/products/add"
@@ -61,6 +67,13 @@ public class SecurityConfig {
                                 "/api/products/delete/**"
 
                         ).hasAuthority("ADMIN")
+
+                        .requestMatchers(HttpMethod.GET, "/api/orders")
+                        .hasAuthority("ADMIN")
+
+                        .requestMatchers(HttpMethod.PUT,
+                                "/api/orders/*/status")
+                        .hasAuthority("ADMIN")
 
                         // Everything else requires authentication
                         .anyRequest().authenticated()
