@@ -25,15 +25,11 @@ public class OrderController {
 
 
     @PostMapping
-    public ResponseEntity<OrderResponseDto> placeOrder(
-            @Valid @RequestBody CreateOrderRequestDto requestDto) {
-
+    public ResponseEntity<OrderResponseDto> placeOrder(@Valid @RequestBody CreateOrderRequestDto requestDto) {
         OrderResponseDto response = orderService.placeOrder(requestDto);
-
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(response);
     }
-
     @GetMapping("/my")
     public ResponseEntity<List<OrderResponseDto>> getMyOrders() {
 
@@ -43,9 +39,7 @@ public class OrderController {
     @GetMapping
     public ResponseEntity<List<OrderResponseDto>> getAllOrders() {
 
-        return ResponseEntity.ok(
-                orderService.getAllOrders()
-        );
+        return ResponseEntity.ok(orderService.getAllOrders());
     }
 
     @GetMapping("/me")
