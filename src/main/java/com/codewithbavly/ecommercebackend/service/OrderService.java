@@ -20,7 +20,7 @@ import com.codewithbavly.ecommercebackend.entity.User;
 import com.codewithbavly.ecommercebackend.security.CustomUserDetails;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
+import com.codewithbavly.ecommercebackend.exception.InsufficientStockException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -69,7 +69,7 @@ public class OrderService {
 
             //Check Stock
             if (product.getStockQuantity() < itemDto.getQuantity()) {
-                throw new IllegalArgumentException(
+                throw new InsufficientStockException(
                         "Not enough stock for product: " + product.getName()
                 );
             }
@@ -103,7 +103,7 @@ public class OrderService {
         return mapToResponseDto(savedOrder);
 
     }
-
+    @Transactional(readOnly = true)
     public List<OrderResponseDto> getMyOrders() {
 
         User currentUser = getCurrentUser();
@@ -114,7 +114,7 @@ public class OrderService {
                 .map(this::mapToResponseDto)
                 .toList();
     }
-
+    @Transactional(readOnly = true)
     public List<OrderResponseDto> getAllOrders() {
 
         List<Order> orders = orderRepository.findAll();

@@ -6,8 +6,12 @@ import com.codewithbavly.ecommercebackend.dto.response.OrderResponseDto;
 import com.codewithbavly.ecommercebackend.service.OrderService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,6 +48,12 @@ public class OrderController {
         );
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> me(Authentication authentication) {
+
+        return ResponseEntity.ok(authentication.getAuthorities());
+    }
+
     @PutMapping("/{id}/status")
     public ResponseEntity<OrderResponseDto> updateOrderStatus(
             @PathVariable Long id,
@@ -53,6 +63,13 @@ public class OrderController {
                 orderService.updateOrderStatus(id, requestDto)
         );
     }
+
+//    @Bean
+//    CommandLineRunner printPassword(PasswordEncoder passwordEncoder) {
+//        return args -> {
+//            System.out.println(passwordEncoder.encode("admin123"));
+//        };
+//    }
 
 
 }

@@ -22,13 +22,16 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
 
-        return user.getRoles()
+        var authorities = user.getRoles()
                 .stream()
-                .map(role ->
-                        new SimpleGrantedAuthority(role.getName().name()))
+                .map(role -> new SimpleGrantedAuthority(role.getName().name()))
                 .collect(Collectors.toSet());
-    }
 
+        System.out.println("User: " + user.getUsername());
+        System.out.println("Authorities: " + authorities);
+
+        return authorities;
+    }
     @Override
     public String getPassword() {
         return user.getPassword();

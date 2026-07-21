@@ -21,11 +21,11 @@ public class JwtService {
     private static final long JWT_EXPIRATION =
             1000 * 60 * 60 * 24; // 24 hours
 
-    @Value("${jwt.secret}")
-    private String secretKey;
-
-    @Value("${jwt.expiration}")
-    private long jwtExpiration;
+//    @Value("${jwt.secret}")
+//    private String secretKey;
+//
+//    @Value("${jwt.expiration}")
+//    private long jwtExpiration;
 
 
     private SecretKey getSigningKey() {
